@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>ServerAPIRequirements</display-name>
+
+	<servlet>
+		<description></description>
+		<display-name>SSOTokenService</display-name>
+		<servlet-name>SSOTokenService</servlet-name>
+		<servlet-class>org.starj.test.destination.SSOTokenService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SSOTokenService</servlet-name>
+		<url-pattern>/token</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<display-name>FrontendDestinationService</display-name>
+		<servlet-name>FrontendDestinationService</servlet-name>
+		<servlet-class>org.starj.test.destination.FrontendDestinationService</servlet-class>
+		<init-param>
+			<param-name>destination-url</param-name>
+			<param-value>https://backend-server.com:8080/test/service</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FrontendDestinationService</servlet-name>
+		<url-pattern>/destination</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<display-name>BackendBusinessService</display-name>
+		<servlet-name>BackendBusinessService</servlet-name>
+		<servlet-class>org.starj.test.destination.BackendBusinessService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BackendBusinessService</servlet-name>
+		<url-pattern>/service</url-pattern>
+	</servlet-mapping>
+	
+	<!-- <filter>
+		<display-name>MyCorsFilter</display-name>
+		<filter-name>MyCorsFilter</filter-name>
+		<filter-class>org.starj.test.cors.MyCorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MyCorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

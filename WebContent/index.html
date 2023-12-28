@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cookie tester</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+</head>
+<script>
+
+function setCookie(cookieName, cookieValue, expireDate){
+    var cookieText=escape(cookieName)+'='+escape(cookieValue);
+    var exp = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * (expireDate || 7)));
+    //cookieText+=("; expires="+exp.toGMTString());
+    cookieText+=("; expires="+exp.toGMTString());
+    cookieText+=("; path=/");
+    //cookieText+=("; domain=localhost");
+    //cookieText+=("; SameSite=None;");
+    //cookieText+=("; Secure");
+    document.cookie=cookieText;
+}
+
+
+function printCookie(){
+	$(".content").html("Browser cookies : " + document.cookie);
+}
+
+
+jQuery(document).ready(function() {
+	
+	printCookie();
+
+	jQuery("#btnIssueToken").click(function(){
+		location.href = "/test/token";
+	});
+	
+
+	jQuery("#btnPost").click(function(){
+		jQuery.ajax({
+			url: "/test/destination",
+			method: "POST",
+			contentType: 'application/json',
+			success: function(e){
+				$(".content").append("<div>Cookies from the server : " + JSON.stringify(e) + "</div>");
+			},
+			error: function(xhr, e, m){
+				$(".content").append("<div>Error with status. " + xhr.status + "-" + xhr.getResponseHeader("Status-Message") + "</div>");
+			}
+		});
+	});
+
+	jQuery("#btnSetCookie").click(function(){
+		setCookie("local-created-cookie", ""+new Date().getTime(), 3);
+	});
+	
+	
+});
+
+</script>
+<body>
+<div>
+	<button id="btnIssueToken">Issue Token (from frontend-server.com)</button>
+	<button id="btnSetCookie">Set Cookie (local created cookie)</button>
+	<button id="btnPost">POST Request</button>
+</div>
+<div class="content">
+</div>
+</body>
+</html>
